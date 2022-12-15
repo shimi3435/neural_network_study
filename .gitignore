@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+data/
+*.csv
+*.png
+dgnet/
+discrete-autograd-master
+*.zip
+DGNet/*.py
