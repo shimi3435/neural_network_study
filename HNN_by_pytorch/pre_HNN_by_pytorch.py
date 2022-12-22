@@ -1,3 +1,4 @@
+import os
 from apng import APNG
 import matplotlib.pyplot as plt
 import autograd
@@ -67,6 +68,8 @@ plt.savefig("q_p.png")
     
 np.savetxt("target.csv",targetlist,delimiter=',')
 np.savetxt("input.csv",inlist,delimiter=',')
+
+os.makedirs("./animation/", exist_ok=True)
 
 files = []
 for i in range(len(q)):
