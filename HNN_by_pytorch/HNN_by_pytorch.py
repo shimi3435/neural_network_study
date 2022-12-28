@@ -1,3 +1,4 @@
+import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -10,8 +11,6 @@ import matplotlib.pyplot as plt
 from apng import APNG
 from math import cos, pi, sin
 from PIL import Image, ImageDraw
-
-import pre_HNN_by_pytorch
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -163,7 +162,9 @@ def make_animation(index, qval, pval):
     im.save(filename)
     return filename
 
+os.makedirs("./animation/", exist_ok=True)
+
 files = []
-for i in range(len(pre_HNN_by_pytorch.q)):
-    files.append(make_animation(i, res[i,0], res[i,1]))    
+for i in range(100):
+    files.append(make_animation(i, res[i,0], res[i,1]))
 APNG.from_files(files, delay=50).save("animation/animation_model.png")
