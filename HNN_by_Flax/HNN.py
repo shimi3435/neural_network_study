@@ -36,6 +36,12 @@ class MLP(nn.Module):
 def MSE_loss(preds, targets):
     return jnp.square(preds - targets).mean()
 
+N = 1
+O = jnp.zeros((N,N))
+Id = jnp.eye(N)
+S = jnp.vstack([jnp.hstack([O, Id]), jnp.hstack([-Id, O])])
+St = S.T
+
 #@partial(jax.jit, static_argnums=(2,))
 def fvec(x, t, state):
     def sum_hamiltonian(params, x):
@@ -86,7 +92,7 @@ def make_animation(index, qval, pval):
     im.save(filename)
     return filename
 
-if __name__ == "__main__":
+def main():
     MY_BATCH_SIZE = 100
 
     dftarget = pd.read_csv("target.csv", header=None, dtype=jnp.float32)
@@ -99,12 +105,6 @@ if __name__ == "__main__":
 
     test_ds = tf.data.Dataset.from_tensors((X_test, Y_test))
     test_ds = test_ds.batch(MY_BATCH_SIZE).prefetch(1)
-
-    N = 1
-    O = jnp.zeros((N,N))
-    Id = jnp.eye(N)
-    S = jnp.vstack([jnp.hstack([O, Id]), jnp.hstack([-Id, O])])
-    St = S.T
 
     rng = jax.random.PRNGKey(0)
     learning_rate = 0.001
@@ -142,3 +142,6 @@ if __name__ == "__main__":
     for i in range(100):
         files.append(make_animation(i, orbit[i,0], orbit[i,1]))
     APNG.from_files(files, delay=50).save("./animation/animation_model.png")
+
+if __name__ == "__main__":
+    main()
