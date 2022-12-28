@@ -42,7 +42,6 @@ Id = jnp.eye(N)
 S = jnp.vstack([jnp.hstack([O, Id]), jnp.hstack([-Id, O])])
 St = S.T
 
-#@partial(jax.jit, static_argnums=(2,))
 def fvec(x, t, state):
     def sum_hamiltonian(params, x):
         hamiltonian = state.apply_fn({'params': state.params}, x)
