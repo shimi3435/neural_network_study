@@ -36,7 +36,6 @@ class MLP(nn.Module):
 def MSE_loss(preds, targets):
     return jnp.square(preds - targets).mean()
 
-#@partial(jax.jit, static_argnums=(2,))
 def fvec(x, t, state):
     def sum_hamiltonian(params, x):
         hamiltonian = state.apply_fn({'params': state.params}, x)
